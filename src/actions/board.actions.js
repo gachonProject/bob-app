@@ -11,7 +11,7 @@ export const addPost = (contents) => {
       .add({
         ...contents,
         owner: currentUser.uid,
-        createdAt: new Date(),
+        createdAt: new Date().toString(),
       })
       .then((data) => {
         dispatch({
