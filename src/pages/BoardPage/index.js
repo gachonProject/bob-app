@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import Header from "../../components/Header";
 import "./styles.css";
 import { firestore } from "../../fbase";
-import { Link } from "react-router-dom";
+import PostItem from "../../components/PostItem";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,27 +42,36 @@ const BoardPage = ({ history }) => {
     saveCoords(coordsObj);
   }, []);
 
-  const handleGeoError = () => {
-    alert("위치 정보를 얻어오는 데 실패했습니다.");
+  const handleGeoError = (error) => {
+    alert("Error occurred. Error code: " + error.code);
   };
 
   useEffect(() => {
     if (storageLength === 1) {
-      navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
-      setIsLoading(true);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
+        setIsLoading(true);
+        alert("Geolocation API 사용이 가능합니다.");
+      } else {
+        alert("해당 브라우저에서 Geolocation API를 지원하지 않습니다.");
+      }
     }
     console.log(storageLength);
     return () => setIsLoading(false);
-  }, [storageLength, handleGeoSuccess]);
+  }, []);
+
+  const onChangePage = (post) => {
+    history.push(`/board/${post.id}`);
+  };
+
+  console.log(posts);
 
   return (
     <Layout>
       <Header title={"밥 친구 게시판"} />
       <div className="container">
         {posts.map((post) => (
-          <Link key={post.id} to={`/board/${post.id}`}>
-            {post.title}
-          </Link>
+          <PostItem key={post.id} post={post} onChangePage={onChangePage} />
         ))}
         <div className="buttons">
           {isLoading ? (
