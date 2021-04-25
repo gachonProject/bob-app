@@ -33,6 +33,9 @@ const BoardDetailPage = () => {
   return (
     <Layout>
       <h1>{postData.title}</h1>
+      <h1>{postData.dongName}</h1>
+      <h1>{postData.cityName}</h1>
+      <h1>{postData.content}</h1>
     </Layout>
   );
 };

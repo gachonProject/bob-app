@@ -5,7 +5,7 @@ import { addPost } from "../../actions/board.actions";
 // import useLocalStorage from "../../hooks/useLocalStorage";
 import axios from "axios";
 
-const BoardWritePage = () => {
+const BoardWritePage = ({ history }) => {
   // const { kakao } = window;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -48,6 +48,7 @@ const BoardWritePage = () => {
     };
     console.log(lat, long);
     dispatch(addPost(contents));
+    history.push("/board");
   };
   return (
     <form onSubmit={onSubmitWriteForm}>

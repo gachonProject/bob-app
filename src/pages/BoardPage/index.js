@@ -11,7 +11,7 @@ const BoardPage = ({ history }) => {
   const [posts, setPosts] = useState([]);
 
   const getPosts = async () => {
-    const db = await firestore.collection("board").get();
+    const db = await firestore.collection("board").orderBy("createdAt", "asc").get();
     db.forEach((document) => {
       const postObj = {
         ...document.data(),
