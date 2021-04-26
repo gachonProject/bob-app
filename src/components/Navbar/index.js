@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import "./style.css";
+import { Nav } from "./styles";
 
 const Navbar = () => {
   const { path } = useParams();
   return (
-    <nav className="nav">
+    <Nav>
       <Link to="/board" className="nav__link">
         <i className="material-icons nav__icon">dashboard</i>
         <span className="nav__text">게시판</span>
@@ -18,7 +18,7 @@ const Navbar = () => {
         <i className="material-icons nav__icon">person</i>
         <span className="nav__text">프로필</span>
       </Link>
-    </nav>
+    </Nav>
   );
 };
 

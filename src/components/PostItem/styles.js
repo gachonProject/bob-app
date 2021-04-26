@@ -4,13 +4,14 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 75px;
+  height: 80px;
   padding: 0.875em 1em;
   border-bottom: 1px solid #ccc;
   p.postlist-content {
     flex: 1;
     display: flex;
     align-items: center;
+    padding: 0.5em 0;
     font-size: 0.875rem;
     color: #757575;
   }

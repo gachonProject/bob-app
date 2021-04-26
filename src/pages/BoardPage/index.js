@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Header from "../../components/Header";
-import "./styles.css";
 import { firestore } from "../../fbase";
 import PostItem from "../../components/PostItem";
+import { Buttons, Container } from "./styles";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,20 +66,20 @@ const BoardPage = ({ history }) => {
   return (
     <Layout>
       <Header title={"밥 친구 게시판"} />
-      <div className="container">
+      <Container>
         {posts.map((post) => (
           <PostItem key={post.id} post={post} onChangePage={onChangePage} />
         ))}
-        <div className="buttons">
+        <Buttons>
           {isLoading ? (
             <div className="fix">위치 정보 계산중</div>
           ) : (
             <button className="fix btn-write" onClick={() => history.push("/write")}>
-              작성
+              <span>작성</span>
             </button>
           )}
-        </div>
-      </div>
+        </Buttons>
+      </Container>
     </Layout>
   );
 };

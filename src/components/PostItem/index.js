@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { firestore } from "../../fbase";
 import { Container } from "./styles";
 import gravatar from "gravatar";
+import dayjs from "dayjs";
 
 const PostItem = ({ post, onChangePage }) => {
   const [userData, setUserData] = useState({});
@@ -46,7 +47,7 @@ const PostItem = ({ post, onChangePage }) => {
           <span> | </span>
           <span> {post.dongName}</span>
           <span> | </span>
-          <span className="date"> {post.createdAt.slice(0, 4)}</span>
+          <span className="date"> {dayjs(post.createdAt).format("MM/DD h:mm A")}</span>
         </div>
         <div className="postlist-sub-data">
           <span className="comments">0</span>
