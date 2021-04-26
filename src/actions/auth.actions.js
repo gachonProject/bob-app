@@ -23,6 +23,7 @@ export const signup = (user) => {
               .set({
                 firstName: user.firstName,
                 lastName: user.lastName,
+                email: user.email,
                 uid: data.user.uid,
                 createdAt: new Date(),
                 isOnline: true,

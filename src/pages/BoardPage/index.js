@@ -56,15 +56,12 @@ const BoardPage = ({ history }) => {
         alert("해당 브라우저에서 Geolocation API를 지원하지 않습니다.");
       }
     }
-    console.log(storageLength);
     return () => setIsLoading(false);
   }, []);
 
   const onChangePage = (post) => {
     history.push(`/board/${post.id}`);
   };
-
-  console.log(posts);
 
   return (
     <Layout>

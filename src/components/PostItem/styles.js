@@ -5,10 +5,12 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 75px;
-  padding: 0.5em 0.75em;
+  padding: 0.875em 1em;
   border-bottom: 1px solid #ccc;
   p.postlist-content {
     flex: 1;
+    display: flex;
+    align-items: center;
     font-size: 0.875rem;
     color: #757575;
   }
@@ -18,6 +20,7 @@ export const Container = styled.div`
     font-size: 0.75rem;
     div.postlist-user-data {
       display: flex;
+      align-items: center;
       color: #a4a4a4;
       span {
         margin-right: 5px;
