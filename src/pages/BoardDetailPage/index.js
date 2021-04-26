@@ -5,6 +5,8 @@ import { useParams } from "react-router";
 import Layout from "../../components/Layout";
 import Header from "../../components/Header";
 import gravatar from "gravatar";
+import { TopArea, Container, Title, Content } from "./styles";
+import dayjs from "dayjs";
 
 const BoardDetailPage = () => {
   const { boardId } = useParams();
@@ -70,13 +72,29 @@ const BoardDetailPage = () => {
   return (
     <Layout>
       <Header title={"밥 친구 게시판"} />
-      <h1>{postData.title}</h1>
-      <h1>{postData.dongName}</h1>
-      <h1>{postData.cityName}</h1>
-      <h1>{postData.content}</h1>
-      <div>
-        <img src={gravatar.url(userData.email, { s: "72px", d: "retro" })} alt="프로필 사진" />
-      </div>
+      <Container>
+        <TopArea>
+          <div className="detail-user-data">
+            <div className="user-image">
+              <img
+                src={gravatar.url(userData.email, { s: "40px", d: "retro" })}
+                alt="프로필 사진"
+              />
+            </div>
+            <div className="meta-data">
+              <span className="owner">익명</span>
+              <span className="date">{dayjs(postData.createdAt).format("MM/DD h:mm A")}</span>
+            </div>
+          </div>
+          <div className="detail-buttons">
+            <button onClick={() => alert("신고완료")} className="report">
+              신고하기
+            </button>
+          </div>
+        </TopArea>
+        <Title>{postData.title}</Title>
+        <Content>{postData.content}</Content>
+      </Container>
     </Layout>
   );
 };
