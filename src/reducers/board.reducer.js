@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 
 const initState = {
   posts: [],
+  postData: {},
+  ownerData: {},
 };
 
 export default (state = initState, action) => {
@@ -23,7 +25,7 @@ export default (state = initState, action) => {
       return state;
     }
 
-    case `${boardConstants.GET_POST}_SUCCESS`: {
+    case `${boardConstants.GET_POSTS}_SUCCESS`: {
       state = {
         ...state,
         posts: action.payload.posts,
@@ -31,13 +33,45 @@ export default (state = initState, action) => {
       break;
     }
 
-    case `${boardConstants.GET_POST}_FAILURE`: {
+    case `${boardConstants.GET_POSTS}_FAILURE`: {
+      return state;
+    }
+
+    case `${boardConstants.GET_POST_DATA}_SUCCESS`: {
+      state = {
+        ...state,
+        postData: action.payload,
+      };
+      break;
+    }
+
+    case `${boardConstants.GET_POST_DATA}_FAILURE`: {
+      return state;
+    }
+
+    case `${boardConstants.GET_OWNER_DATA}_SUCCESS`: {
+      state = {
+        ...state,
+        ownerData: action.payload,
+      };
+      break;
+    }
+
+    case `${boardConstants.GET_OWNER_DATA}_FAILURE`: {
       return state;
     }
 
     case `${boardConstants.REMOVE_POST}_FAILURE`: {
       toast.error("게시글 삭제 중 오류가 발생했습니다.");
       return state;
+    }
+
+    case `${boardConstants.RESET_DATA}_SUCCESS`: {
+      state = {
+        postData: {},
+        posts: [],
+        ownerData: {},
+      };
     }
 
     // case `${boardConstants.UPDATE_POST}_SUCCESS`

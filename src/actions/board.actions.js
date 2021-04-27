@@ -1,5 +1,5 @@
 import { boardConstants } from "./constants";
-import { auth, firestore, firebaseInstance } from "../fbase";
+import { auth, firestore } from "../fbase";
 
 export const addPost = (contents) => {
   return (dispatch) => {
@@ -11,6 +11,7 @@ export const addPost = (contents) => {
       .add({
         ...contents,
         owner: currentUser.uid,
+        ownerEmail: currentUser.email,
         createdAt: new Date().toString(),
       })
       .then((data) => {
@@ -28,9 +29,11 @@ export const addPost = (contents) => {
 };
 
 export const getPostList = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const db = firestore;
-    db.collection("board")
+    const unsubscribe = db
+      .collection("board")
+      .orderBy("createdAt", "desc")
       .get()
       .then((querySnapshot) => {
         const posts = [];
@@ -41,14 +44,73 @@ export const getPostList = () => {
           };
           posts.push(postObj);
         });
+        console.log(posts);
         dispatch({
-          type: `${boardConstants.GET_POST}_SUCCESS`,
+          type: `${boardConstants.GET_POSTS}_SUCCESS`,
+          payload: { posts },
         });
       })
       .catch((error) => {
         dispatch({
-          type: `${boardConstants.GET_POST}_FAILURE`,
+          type: `${boardConstants.GET_POSTS}_FAILURE`,
         });
       });
+    return unsubscribe;
+  };
+};
+
+export const getPostData = (boardId) => {
+  return async (dispatch) => {
+    const db = await firestore.collection("board").doc(boardId);
+    const unsubscribe = db
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          dispatch({
+            type: `${boardConstants.GET_POST_DATA}_SUCCESS`,
+            payload: doc.data(),
+          });
+          console.log(doc.data().owner);
+          const db2 = firestore.collection("users").doc(doc.data().owner);
+          db2
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                dispatch({
+                  type: `${boardConstants.GET_OWNER_DATA}_SUCCESS`,
+                  payload: doc.data(),
+                });
+                console.log(doc.data());
+              } else {
+                console.log(doc);
+                console.log("존재하지 않는 게시자입니다..");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              console.log("게시자 조회에 실패했습니다.");
+            });
+        } else {
+          alert("존재하지 않는 게시물입니다");
+          dispatch({
+            type: `${boardConstants.GET_POST_DATA}_FAILURE`,
+          });
+        }
+      })
+      .catch((error) => {
+        alert("게시글 조회에 실패했습니다.");
+        dispatch({
+          type: `${boardConstants.GET_POST_DATA}_FAILURE`,
+        });
+      });
+    return unsubscribe;
+  };
+};
+
+export const resetData = () => {
+  return (dispatch) => {
+    dispatch({
+      type: `${boardConstants.RESET_DATA}_SUCCESS`,
+    });
   };
 };

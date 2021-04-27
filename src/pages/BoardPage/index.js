@@ -1,30 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Header from "../../components/Header";
-import "./styles.css";
-import { firestore } from "../../fbase";
 import PostItem from "../../components/PostItem";
+import { Buttons, Container } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostList } from "../../actions/board.actions";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [storageLength, setStorageLength] = useState(localStorage.length);
-  const [posts, setPosts] = useState([]);
-
-  const getPosts = async () => {
-    const db = await firestore.collection("board").orderBy("createdAt", "asc").get();
-    db.forEach((document) => {
-      const postObj = {
-        ...document.data(),
-        id: document.id,
-      };
-      setPosts((prev) => [postObj, ...prev]);
-    });
-  };
+  const dispatch = useDispatch();
+  const board = useSelector((state) => state.board.posts);
 
   useEffect(() => {
-    getPosts();
-    return () => setPosts([]);
-  }, [setPosts]);
+    dispatch(getPostList());
+    console.log(board);
+  }, []);
 
   const saveCoords = (coordsObj) => {
     localStorage.setItem("coords", JSON.stringify(coordsObj));
@@ -56,7 +47,6 @@ const BoardPage = ({ history }) => {
         alert("해당 브라우저에서 Geolocation API를 지원하지 않습니다.");
       }
     }
-    console.log(storageLength);
     return () => setIsLoading(false);
   }, []);
 
@@ -64,25 +54,23 @@ const BoardPage = ({ history }) => {
     history.push(`/board/${post.id}`);
   };
 
-  console.log(posts);
-
   return (
     <Layout>
       <Header title={"밥 친구 게시판"} />
-      <div className="container">
-        {posts.map((post) => (
+      <Container>
+        {board.map((post) => (
           <PostItem key={post.id} post={post} onChangePage={onChangePage} />
         ))}
-        <div className="buttons">
+        <Buttons>
           {isLoading ? (
             <div className="fix">위치 정보 계산중</div>
           ) : (
             <button className="fix btn-write" onClick={() => history.push("/write")}>
-              작성
+              <h3>작성</h3>
             </button>
           )}
-        </div>
-      </div>
+        </Buttons>
+      </Container>
     </Layout>
   );
 };
