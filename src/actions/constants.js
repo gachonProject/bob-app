@@ -17,4 +17,5 @@ export const boardConstants = {
   GET_POSTS: "GET_POSTS",
   GET_POST_DATA: "GET_POST_DATA",
   GET_OWNER_DATA: "GET_OWNER_DATA",
+  RESET_DATA: "RESET_DATA",
 };
