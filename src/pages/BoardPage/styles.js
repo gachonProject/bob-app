@@ -19,7 +19,7 @@ export const Buttons = styled.div`
     display: block;
     bottom: 80px;
     margin: 0 auto;
-    width: 57px;
+    width: 75px;
     text-align: center;
   }
   .btn-write {
@@ -33,5 +33,8 @@ export const Buttons = styled.div`
     padding: 8px 12px;
     font-size: 16px;
     background: white;
+    h3 {
+      margin: 0 auto;
+    }
   }
 `;
