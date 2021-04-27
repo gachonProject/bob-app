@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Header from "../../components/Header";
-import { firestore } from "../../fbase";
 import PostItem from "../../components/PostItem";
 import { Buttons, Container } from "./styles";
 import { useDispatch, useSelector } from "react-redux";

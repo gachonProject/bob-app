@@ -29,9 +29,11 @@ export const addPost = (contents) => {
 };
 
 export const getPostList = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const db = firestore;
-    db.collection("board")
+    const unsubscribe = db
+      .collection("board")
+      .orderBy("createdAt", "desc")
       .get()
       .then((querySnapshot) => {
         const posts = [];
@@ -53,13 +55,15 @@ export const getPostList = () => {
           type: `${boardConstants.GET_POSTS}_FAILURE`,
         });
       });
+    return unsubscribe;
   };
 };
 
 export const getPostData = (boardId) => {
-  return (dispatch) => {
-    const db = firestore.collection("board").doc(boardId);
-    db.get()
+  return async (dispatch) => {
+    const db = await firestore.collection("board").doc(boardId);
+    const unsubscribe = db
+      .get()
       .then((doc) => {
         if (doc.exists) {
           dispatch({
@@ -99,5 +103,14 @@ export const getPostData = (boardId) => {
           type: `${boardConstants.GET_POST_DATA}_FAILURE`,
         });
       });
+    return unsubscribe;
+  };
+};
+
+export const resetData = () => {
+  return (dispatch) => {
+    dispatch({
+      type: `${boardConstants.RESET_DATA}_SUCCESS`,
+    });
   };
 };
