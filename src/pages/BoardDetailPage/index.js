@@ -1,73 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { firestore } from "../../fbase";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Layout from "../../components/Layout";
 import Header from "../../components/Header";
 import gravatar from "gravatar";
-import { TopArea, Container, Title, Content } from "./styles";
+import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
+import { getPostData } from "../../actions/board.actions";
 
 const BoardDetailPage = () => {
   const { boardId } = useParams();
-  const [postData, setPostData] = useState({});
-  const [userData, setUserData] = useState({});
-
-  const getPostData = useCallback(async () => {
-    const db = await firestore.collection("board").doc(boardId);
-    db.get()
-      .then((doc) => {
-        if (doc.exists) {
-          setPostData(doc.data());
-          console.log(doc.data());
-          console.log(postData);
-        } else {
-          alert("존재하지 않는 게시물입니다");
-        }
-      })
-      .catch((error) => {
-        alert("게시글 조회에 실패했습니다.");
-      });
-    // firestore
-    //   .collection("board")
-    //   .doc(boardId)
-    //   .onSnapshot((doc) => {
-    //     console.log("Current data: ", doc.data());
-    //     setPostData(doc.data());
-    //     console.log(postData);
-    //   });
-  }, [boardId, postData, setPostData]);
-
-  const getUserData = useCallback(() => {
-    const db = firestore.collection("users").doc(postData.owner);
-    console.log(postData.owner);
-    db.get()
-      .then((doc) => {
-        if (doc.exists) {
-          setUserData(doc.data());
-          console.log(userData);
-          console.log(doc.data());
-        } else {
-          console.log("존재하지 않는 게시자입니다..");
-          console.log(doc.data());
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log("게시자 조회에 실패했습니다.");
-      });
-  }, []);
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.board.postData);
+  const owner = useSelector((state) => state.board.ownerData);
 
   useEffect(() => {
-    getPostData();
-    console.log(postData);
-    getUserData();
+    dispatch(getPostData(boardId));
+    // dispatch(getOwnerData(post.owner));
+    console.log(post);
+    console.log(owner);
   }, []);
-  // useEffect(() => {
-  //   console.log(postData.owner);
-  //   getUserData();
-  //   return () => setUserData({});
-  // }, []);
 
   return (
     <Layout>
@@ -76,24 +28,28 @@ const BoardDetailPage = () => {
         <TopArea>
           <div className="detail-user-data">
             <div className="user-image">
-              <img
-                src={gravatar.url(userData.email, { s: "40px", d: "retro" })}
-                alt="프로필 사진"
-              />
+              <img src={gravatar.url(owner.email, { s: "40px", d: "retro" })} alt="프로필 사진" />
             </div>
             <div className="meta-data">
               <span className="owner">익명</span>
-              <span className="date">{dayjs(postData.createdAt).format("MM/DD h:mm A")}</span>
+              <div className="location-and-date">
+                <span className="date">{dayjs(post.createdAt).format("MM/DD h:mm A")}</span>
+                <span>|</span>
+                <span className="location">{post.dongName}</span>
+              </div>
             </div>
           </div>
-          <div className="detail-buttons">
-            <button onClick={() => alert("신고완료")} className="report">
+          <Buttons>
+            <button onClick={() => alert("신고완료")} className="btn btn-report">
               신고하기
             </button>
-          </div>
+            <button onClick={() => alert("채팅")} className="btn btn-chatting">
+              채팅하기
+            </button>
+          </Buttons>
         </TopArea>
-        <Title>{postData.title}</Title>
-        <Content>{postData.content}</Content>
+        <Title>{post.title}</Title>
+        <Content>{post.content}</Content>
       </Container>
     </Layout>
   );
