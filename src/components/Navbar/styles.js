@@ -4,12 +4,11 @@ export const Nav = styled.nav`
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 55px;
+  height: 65px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   display: flex;
   overflow-x: auto;
-  padding-bottom: 10px;
   .nav__link {
     display: flex;
     flex-direction: column;
@@ -25,6 +24,7 @@ export const Nav = styled.nav`
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
     transition: background-color 0.1s ease-in-out;
+    padding-bottom: 10px;
   }
 
   .nav__link:hover {
