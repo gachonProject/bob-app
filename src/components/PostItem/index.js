@@ -6,27 +6,36 @@ import { firestore } from "../../fbase";
 import { Container } from "./styles";
 import gravatar from "gravatar";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostData } from "../../actions/board.actions";
 
 const PostItem = ({ post, onChangePage }) => {
   const [userData, setUserData] = useState({});
+  const dispatch = useDispatch();
   const firstLine = post.content.slice(0, 40);
+  const postdata = useSelector((state) => state.board.postData);
 
-  const getUserData = useCallback(() => {
-    const db = firestore.collection("users").doc(post.owner);
-    console.log(post.owner);
-    db.get()
+  useEffect(() => {
+    dispatch(getPostData(post.id));
+  }, [dispatch]);
+
+  const getUserData = useCallback(async () => {
+    const db = await firestore.collection("users").doc(post.owner);
+    console.log(post);
+    await db
+      .get()
       .then((doc) => {
         if (doc.exists) {
           setUserData(doc.data());
         } else {
-          console.log("존재하지 않는 게시자입니다..");
+          alert("존재하지 않는 게시자입니다..");
         }
       })
       .catch((error) => {
         console.log(error);
         console.log("게시자 조회에 실패했습니다.");
       });
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     getUserData();
@@ -38,11 +47,13 @@ const PostItem = ({ post, onChangePage }) => {
       <p className="postlist-content">{firstLine}</p>
       <div className="postlist-meta-data">
         <div className="postlist-user-data">
-          <img
-            style={{ marginRight: "4px" }}
-            src={gravatar.url(userData.email, { s: "24", d: "retro" })}
-            alt="프로필 사진"
-          />
+          {userData && (
+            <img
+              style={{ marginRight: "4px" }}
+              src={gravatar.url(userData.email, { s: "24", d: "retro" })}
+              alt="프로필 사진"
+            />
+          )}
           <span>익명 </span>
           <span> | </span>
           <span> {post.dongName}</span>
