@@ -1,6 +1,18 @@
 import { boardConstants } from "./constants";
 import { auth, firestore } from "../fbase";
 
+const getToday = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (1 + date.getMonth())).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+
+  return year + month + day + " " + hours + ":" + minutes + ":" + seconds;
+};
+
 export const addPost = (contents) => {
   return (dispatch) => {
     const currentUser = auth.currentUser;
@@ -12,7 +24,7 @@ export const addPost = (contents) => {
         ...contents,
         owner: currentUser.uid,
         ownerEmail: currentUser.email,
-        createdAt: new Date().toString(),
+        createdAt: getToday(),
       })
       .then((data) => {
         dispatch({
@@ -70,7 +82,7 @@ export const getPostData = (boardId) => {
             type: `${boardConstants.GET_POST_DATA}_SUCCESS`,
             payload: doc.data(),
           });
-          console.log(doc.data().owner);
+          // console.log(doc.data().owner);
           const db2 = firestore.collection("users").doc(doc.data().owner);
           db2
             .get()
@@ -80,7 +92,7 @@ export const getPostData = (boardId) => {
                   type: `${boardConstants.GET_OWNER_DATA}_SUCCESS`,
                   payload: doc.data(),
                 });
-                console.log(doc.data());
+                // console.log(doc.data());
               } else {
                 console.log(doc);
                 console.log("존재하지 않는 게시자입니다..");
