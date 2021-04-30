@@ -7,13 +7,16 @@ import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
 import { getPostData, resetData } from "../../actions/board.actions";
 
-const BoardDetailPage = () => {
+const BoardDetailPage = ({ history }) => {
   const { boardId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
   const post = useSelector((state) => state.board.postData);
   const owner = useSelector((state) => state.board.ownerData);
   console.log(isLoading);
+  console.log(user);
+  console.log(owner);
   useEffect(() => {
     dispatch(getPostData(boardId));
     setIsLoading(false);
@@ -55,9 +58,14 @@ const BoardDetailPage = () => {
                 <button onClick={() => alert("신고완료")} className="btn btn-report">
                   신고하기
                 </button>
-                <button onClick={() => alert("채팅")} className="btn btn-chatting">
-                  채팅하기
-                </button>
+                {user.uid !== owner.uid ? (
+                  <button
+                    onClick={() => history.push(`/chatlist/${user.uid}/${owner.uid}`)}
+                    className="btn btn-chatting"
+                  >
+                    채팅하기
+                  </button>
+                ) : null}
               </Buttons>
             </TopArea>
             <Title>{post.title}</Title>
