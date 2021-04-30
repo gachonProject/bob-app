@@ -18,7 +18,7 @@ export const FormWrap = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   padding: 1em;
 `;
@@ -27,6 +27,7 @@ export const InputTitle = styled.input`
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 0.5em;
+  font-weight: 600;
 `;
 
 export const InputContent = styled(TextareaAutosize)`

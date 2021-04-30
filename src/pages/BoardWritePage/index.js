@@ -54,8 +54,7 @@ const BoardWritePage = ({ history }) => {
     history.push("/board");
   };
   return (
-    <Layout>
-      <Header title={"게시글 작성"} />
+    <Layout title={"글 작성"}>
       <Container>
         <FormWrap>
           <Form onSubmit={onSubmitWriteForm}>

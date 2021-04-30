@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Layout from "../../components/Layout";
-import Header from "../../components/Header";
 import gravatar from "gravatar";
 import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
 import { getPostData, resetData } from "../../actions/board.actions";
-import store from "../../store";
-import { firestore } from "../../fbase";
 
 const BoardDetailPage = () => {
   const { boardId } = useParams();
@@ -31,8 +28,7 @@ const BoardDetailPage = () => {
   // }, []);
 
   return (
-    <Layout>
-      <Header title={"밥 친구 게시판"} />
+    <Layout title={"밥 친구 게시판"}>
       <Container>
         {!isLoading ? (
           <>
