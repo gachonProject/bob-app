@@ -4,6 +4,9 @@ import { useDispatch } from "react-redux";
 import { addPost } from "../../actions/board.actions";
 // import useLocalStorage from "../../hooks/useLocalStorage";
 import axios from "axios";
+import Layout from "../../components/Layout";
+import Header from "../../components/Header";
+import { Container, Form, FormWrap, InputTitle, InputContent } from "./styles";
 
 const BoardWritePage = ({ history }) => {
   // const { kakao } = window;
@@ -51,21 +54,28 @@ const BoardWritePage = ({ history }) => {
     history.push("/board");
   };
   return (
-    <form onSubmit={onSubmitWriteForm}>
-      <input
-        type="text"
-        placeholder="제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="컨텐츠"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <button type="submit">작성</button>
-    </form>
+    <Layout title={"글 작성"}>
+      <Container>
+        <FormWrap>
+          <Form onSubmit={onSubmitWriteForm}>
+            <InputTitle
+              type="text"
+              placeholder="제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <InputContent
+              type="text"
+              placeholder="내용"
+              value={content}
+              minRows={5}
+              onChange={(e) => setContent(e.target.value)}
+            ></InputContent>
+            <button type="submit">작성</button>
+          </Form>
+        </FormWrap>
+      </Container>
+    </Layout>
   );
 };
 

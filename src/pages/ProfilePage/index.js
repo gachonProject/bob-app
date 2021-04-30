@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
 import gravatar from "gravatar";
 import { Container, UserInfo, Account, Buttons } from "./styles";
@@ -14,8 +13,7 @@ const ProfilePage = () => {
   console.log(auth);
 
   return (
-    <Layout>
-      <Header title={"프로필"} />
+    <Layout title="프로필">
       <Container>
         <UserInfo>
           <div className="user-image">

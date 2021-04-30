@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import Header from "../../components/Header";
 import PostItem from "../../components/PostItem";
 import { Buttons, Container } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,8 +54,7 @@ const BoardPage = ({ history }) => {
   };
 
   return (
-    <Layout>
-      <Header title={"밥 친구 게시판"} />
+    <Layout title={"밥 친구 게시판"}>
       <Container>
         {board.map((post) => (
           <PostItem key={post.id} post={post} onChangePage={onChangePage} />
