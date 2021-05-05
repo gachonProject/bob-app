@@ -11,6 +11,11 @@ const ChatPage = () => {
   const { uid_2 } = useParams();
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
+  const owner = useSelector((state) => state.board.ownerData);
+  // console.log(owner);
+
+  // console.log("나", uid_1, "접속자", auth.uid);
+  // console.log("주소", uid_2, "작성자", owner.uid);
 
   const [message, setMessage] = useState("");
   const [userUid, setUserUid] = useState(null);
@@ -43,16 +48,17 @@ const ChatPage = () => {
     <Layout title={"채팅"}>
       <Container>
         <div className="chatArea">
-          <div className="chatHeader">상대방</div>
           <div className="messageSections">
-            {user.conversations.map((con, i) => (
-              <div
-                key={con.user_uid_1 + i}
-                style={{ textAlign: con.user_uid_1 === auth.uid ? "right" : "left" }}
-              >
-                <p className="messageStyle">{con.message}</p>
-              </div>
-            ))}
+            {uid_1 === auth.uid
+              ? user.conversations.map((con, i) => (
+                  <div
+                    key={con.user_uid_1 + i}
+                    style={{ textAlign: con.user_uid_1 === auth.uid ? "right" : "left" }}
+                  >
+                    <p className="messageStyle">{con.message}</p>
+                  </div>
+                ))
+              : null}
           </div>
 
           <div className="chatControls">

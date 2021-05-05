@@ -6,18 +6,16 @@ export const getRealtimeUsers = (uid) => {
     dispatch({ type: `${userConstants.GET_REALTIME_USERS}_REQUEST` });
 
     const db = firestore;
-    const unsubscribe = db
-      .collection("users")
-      .onSnapshot((querySnapshot) => {
-        const users = [];
-        querySnapshot.forEach((doc) => {
-          if (doc.data().uid !== uid) {
-            users.push(doc.data());
-          }
-        });
-
-        dispatch({ type: `${userConstants.GET_REALTIME_USERS}_SUCCESS`, payload: { users } });
+    const unsubscribe = db.collection("users").onSnapshot((querySnapshot) => {
+      const users = [];
+      querySnapshot.forEach((doc) => {
+        if (doc.data().uid !== uid) {
+          users.push(doc.data());
+        }
       });
+
+      dispatch({ type: `${userConstants.GET_REALTIME_USERS}_SUCCESS`, payload: { users } });
+    });
     return unsubscribe;
   };
 };
@@ -55,7 +53,7 @@ export const getRealtimeConversations = (user) => {
           ) {
             conversations.push(doc.data());
           }
-          if (conversations.length > 0) {
+          if (conversations.length >= 0) {
             dispatch({
               type: userConstants.GET_REALTIME_MESSAGES,
               payload: { conversations },

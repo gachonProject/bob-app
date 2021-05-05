@@ -11,12 +11,13 @@ const BoardDetailPage = ({ history }) => {
   const { boardId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth);
+  const currentUser = useSelector((state) => state.auth);
   const post = useSelector((state) => state.board.postData);
   const owner = useSelector((state) => state.board.ownerData);
-  console.log(isLoading);
-  console.log(user);
-  console.log(owner);
+  console.log(currentUser);
+  if (owner) {
+    console.log(owner);
+  }
   useEffect(() => {
     dispatch(getPostData(boardId));
     setIsLoading(false);
@@ -58,9 +59,9 @@ const BoardDetailPage = ({ history }) => {
                 <button onClick={() => alert("신고완료")} className="btn btn-report">
                   신고하기
                 </button>
-                {user.uid !== owner.uid ? (
+                {currentUser.uid !== owner.uid ? (
                   <button
-                    onClick={() => history.push(`/chatlist/${user.uid}/${owner.uid}`)}
+                    onClick={() => history.push(`/chatlist/${currentUser.uid}/${owner.uid}`)}
                     className="btn btn-chatting"
                   >
                     채팅하기
