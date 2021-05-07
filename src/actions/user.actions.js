@@ -1,6 +1,18 @@
 import { userConstants } from "./constants";
 import { firestore } from "../fbase";
 
+const getDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (1 + date.getMonth())).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+
+  return year + month + day + " " + hours + ":" + minutes + ":" + seconds;
+};
+
 export const getRealtimeUsers = (uid) => {
   return async (dispatch) => {
     dispatch({ type: `${userConstants.GET_REALTIME_USERS}_REQUEST` });
@@ -27,7 +39,7 @@ export const updateMessage = (msgObj) => {
       .add({
         ...msgObj,
         isView: false,
-        createdAt: new Date(),
+        createdAt: getDate(),
       })
       .then((data) => {
         console.log(data);
