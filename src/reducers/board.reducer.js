@@ -8,7 +8,6 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  console.log(action);
   switch (action.type) {
     case `${boardConstants.ADD_POST}_SUCCESS`: {
       toast.success("게시글이 등록되었습니다.");

@@ -1,25 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import Layout from "../../components/Layout";
-import { Container } from "./styles";
-import "./style.css";
+import { Container, ChatControls, ChatArea } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getRealtimeConversations, updateMessage } from "../../actions";
+import dayjs from "dayjs";
 
 const ChatPage = () => {
   const { uid_1 } = useParams();
   const { uid_2 } = useParams();
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
+  const owner = useSelector((state) => state.board.ownerData);
+  // console.log(owner);
+
+  // console.log("나", uid_1, "접속자", auth.uid);
+  // console.log("주소", uid_2, "작성자", owner.uid);
 
   const [message, setMessage] = useState("");
   const [userUid, setUserUid] = useState(null);
   const dispatch = useDispatch();
-  let unsubscribe = useRef();
+  // let unsubscribe = useRef();
 
   useEffect(() => {
     dispatch(getRealtimeConversations({ uid_1, uid_2 }));
     setUserUid(uid_2);
+    console.log(user.conversations);
   }, []);
 
   const submitMessage = (e) => {
@@ -40,30 +46,42 @@ const ChatPage = () => {
   };
 
   return (
-    <Layout title={"채팅"}>
+    <Layout title={"채팅"} style={{ marginBottom: "0" }}>
       <Container>
-        <div className="chatArea">
-          <div className="chatHeader">상대방</div>
-          <div className="messageSections">
-            {user.conversations.map((con, i) => (
-              <div
-                key={con.user_uid_1 + i}
-                style={{ textAlign: con.user_uid_1 === auth.uid ? "right" : "left" }}
-              >
-                <p className="messageStyle">{con.message}</p>
-              </div>
-            ))}
+        <ChatArea>
+          <div>
+            {uid_1 === auth.uid
+              ? user.conversations.map((con, i) => (
+                  <div
+                    key={con.user_uid_1 + i}
+                    className={con.user_uid_1 === auth.uid ? "my-msg" : "msg"}
+                  >
+                    {con.user_uid_1 === auth.uid && (
+                      <span className="date">{dayjs(con.createdAt).format("MM/DD h:mm A")}</span>
+                    )}
+                    <p
+                      className="messageStyle"
+                      style={{ background: con.user_uid_1 === auth.uid ? "#ffc9c9" : "#fff" }}
+                    >
+                      {con.message}
+                    </p>
+                    {con.user_uid_2 === auth.uid && (
+                      <span className="date">{dayjs(con.createdAt).format("MM/DD h:mm A")}</span>
+                    )}
+                  </div>
+                ))
+              : null}
           </div>
 
-          <div className="chatControls">
+          <ChatControls>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Write Message.."
+              placeholder="메시지를 입력하세요"
             />
             <button onClick={submitMessage}>send</button>
-          </div>
-        </div>
+          </ChatControls>
+        </ChatArea>
       </Container>
     </Layout>
   );

@@ -3,11 +3,11 @@ import Header from "../Header";
 import Navbar from "../Navbar";
 import { Container } from "./styles";
 
-const Layout = (props) => {
+const Layout = ({ children, title, style }) => {
   return (
-    <Container>
-      <Header title={props.title} />
-      {props.children}
+    <Container style>
+      <Header title={title} />
+      {children}
       <Navbar />
     </Container>
   );
