@@ -21,7 +21,7 @@ const BoardDetailPage = ({ history }) => {
   useEffect(() => {
     dispatch(getPostData(boardId));
     setIsLoading(false);
-    console.log(isLoading);
+    // console.log(post.createdAt);
     return [dispatch(resetData()), setIsLoading(false)];
   }, [dispatch]);
 
