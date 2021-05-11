@@ -86,10 +86,9 @@ export const getRealtimeConversations = (user) => {
 
 export const getConversationList = (uid) => {
   return async (dispatch) => {
-    const db = await firestore;
+    const db = firestore;
     if (uid) {
-      await db
-        .collection("conversations")
+      db.collection("conversations")
         .where("user_uid_1", "==", uid)
         .orderBy("createdAt", "desc")
         .onSnapshot((querySnpshot) => {
