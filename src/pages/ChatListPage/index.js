@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getConversationList } from "../../actions/user.actions";
 import Layout from "../../components/Layout";
 import { firestore } from "../../fbase";
+import dayjs from "dayjs";
+import { ChatContainer, ChatData, ChatPreview } from "./styles";
 
 const ChatListPage = () => {
   const currentUser = useSelector((state) => state.auth);
-  // const conversationList = useSelector((state) => state.user.conversationList);
-  // const conversations = useSelector((state) => state.user.conversations);
-  // const dispatch = useDispatch();
   const [conversationList, setConversationList] = useState([]);
 
   console.log(currentUser);
@@ -36,9 +34,11 @@ const ChatListPage = () => {
                 conversations.push({
                   members: [doc.data().user_uid_1, doc.data().user_uid_2].sort(),
                   message: doc.data().message,
+                  createdAt: doc.data().createdAt,
                 });
 
                 conversations.push([doc.data().user_uid_1, doc.data().user_uid_2].sort().join(""));
+                console.log(doc.data());
               }
             }
           });
@@ -55,21 +55,29 @@ const ChatListPage = () => {
 
   return (
     <Layout title={"채팅목록"}>
-      <h1>채팅목록</h1>
       {conversationList.map((room) =>
         // 현재 반복문을 돌고 있는 room이 객체일 시
         room.members ? (
-          // 접속중인 유저와 채팅 방 멤버의 첫번째 요소가 같으면
-          currentUser.uid === room.members[0] ? (
-            // 두번째 params로 채팅 방 멤버의 두번째 요소로 지정
-            <Link to={`chatlist/${currentUser.uid}/${room.members[1]}`}>
-              <div>{room.message}</div>
-            </Link>
-          ) : (
-            <Link to={`chatlist/${currentUser.uid}/${room.members[0]}`}>
-              <div>{room.message}</div>
-            </Link>
-          )
+          /**
+           * 접속중인 유저의 id를 첫번째 params로,
+           * 접속중인 유저의 id와 반대(상대방)id를 두번째 params로 지정
+           * */
+          <Link
+            to={
+              currentUser.uid === room.members[0]
+                ? `chatlist/${currentUser.uid}/${room.members[1]}`
+                : `chatlist/${currentUser.uid}/${room.members[0]}`
+            }
+          >
+            <ChatContainer>
+              <ChatData>
+                <div className="user">익명</div>
+                <div className="date">{dayjs(room.createdAt).format("MM/DD hh:mm")}</div>
+              </ChatData>
+              <ChatPreview>{room.message}</ChatPreview>
+              <div></div>
+            </ChatContainer>
+          </Link>
         ) : // 반복문을 돌고 있는 room이 객체가 아니면 렌더링 안함
         null
       )}
