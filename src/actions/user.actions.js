@@ -83,3 +83,29 @@ export const getRealtimeConversations = (user) => {
     // OR user_uid_1 === 'yourId' and user_uid_2 === 'myId'
   };
 };
+
+export const getConversationList = (uid) => {
+  return async (dispatch) => {
+    const db = firestore;
+    if (uid) {
+      db.collection("conversations")
+        .where("user_uid_1", "==", uid)
+        .orderBy("createdAt", "desc")
+        .onSnapshot((querySnpshot) => {
+          const conversationList = [];
+          querySnpshot.forEach((doc) => {
+            if (!conversationList.includes(doc.data().user_uid_2)) {
+              conversationList.push(doc.data());
+              conversationList.push(doc.data().user_uid_2);
+            }
+            // console.log(doc.data());
+            dispatch({
+              type: userConstants.GET_CONVERSATION_LIST,
+              payload: { conversationList },
+            });
+          });
+          console.log(conversationList);
+        });
+    }
+  };
+};

@@ -3,6 +3,7 @@ import { userConstants } from "../actions/constants";
 const initState = {
   users: [],
   conversations: [],
+  conversationList: [],
 };
 
 export default (state = initState, action) => {
@@ -23,6 +24,12 @@ export default (state = initState, action) => {
         conversations: action.payload.conversations,
       };
       break;
+
+    case `${userConstants.GET_CONVERSATION_LIST}_SUCCESS`:
+      state = {
+        ...state,
+        conversationList: action.payload.conversationList,
+      };
   }
 
   return state;
