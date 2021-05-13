@@ -98,6 +98,7 @@ export const signIn = (user) => {
           type: `${authConstants.USER_LOGIN}_FAILURE`,
           payload: { error },
         });
+        alert("아이디 또는 비밀번호를 확인해주세요.");
       });
   };
 };

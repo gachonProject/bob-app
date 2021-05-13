@@ -6,14 +6,13 @@ import { firestore } from "../../fbase";
 import { Container } from "./styles";
 import gravatar from "gravatar";
 import dayjs from "dayjs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getPostData } from "../../actions/board.actions";
 
 const PostItem = ({ post, onChangePage }) => {
   const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
   const firstLine = post.content.slice(0, 40);
-  const postdata = useSelector((state) => state.board.postData);
 
   useEffect(() => {
     dispatch(getPostData(post.id));

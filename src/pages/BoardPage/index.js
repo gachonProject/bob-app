@@ -14,7 +14,7 @@ const BoardPage = ({ history }) => {
   useEffect(() => {
     dispatch(getPostList());
     console.log(board);
-  }, []);
+  }, [dispatch]);
 
   const saveCoords = (coordsObj) => {
     localStorage.setItem("coords", JSON.stringify(coordsObj));

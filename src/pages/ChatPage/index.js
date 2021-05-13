@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Layout from "../../components/Layout";
 import { Container, ChatControls, ChatArea } from "./styles";
@@ -11,16 +11,10 @@ const ChatPage = () => {
   const { uid_2 } = useParams();
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
-  const owner = useSelector((state) => state.board.ownerData);
-  // console.log(owner);
-
-  // console.log("나", uid_1, "접속자", auth.uid);
-  // console.log("주소", uid_2, "작성자", owner.uid);
 
   const [message, setMessage] = useState("");
   const [userUid, setUserUid] = useState(null);
   const dispatch = useDispatch();
-  // let unsubscribe = useRef();
 
   useEffect(() => {
     dispatch(getRealtimeConversations({ uid_1, uid_2 }));
