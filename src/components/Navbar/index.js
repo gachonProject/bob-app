@@ -1,9 +1,8 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Nav } from "./styles";
 
 const Navbar = () => {
-  const { path } = useParams();
   return (
     <Nav>
       <Link to="/board" className="nav__link">

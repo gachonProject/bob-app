@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { Redirect } from "react-router";
 import { addPost } from "../../actions/board.actions";
-// import useLocalStorage from "../../hooks/useLocalStorage";
 import axios from "axios";
 import Layout from "../../components/Layout";
-import Header from "../../components/Header";
 import { Container, Form, FormWrap, InputTitle, InputContent } from "./styles";
 
 const BoardWritePage = ({ history }) => {
-  // const { kakao } = window;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const loadedCoords = localStorage.getItem("coords");
@@ -29,10 +25,6 @@ const BoardWritePage = ({ history }) => {
     const res = await axios.get(url, {
       headers: { Authorization: "KakaoAK " + key },
     });
-    // console.log(res.data);
-    // console.log(res.data.documents[0].address.region_2depth_name);
-    // console.log(res.data.documents[0].address.region_3depth_name);
-    // console.log(url);
     setCityName(res.data.documents[0].address.region_2depth_name);
     setDongName(res.data.documents[0].address.region_3depth_name);
   };

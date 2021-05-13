@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getRealtimeUsers, logout } from "../../actions";
+import { logout } from "../../actions";
 import Layout from "../../components/Layout";
 import gravatar from "gravatar";
 import { Container, UserInfo, Account, Buttons } from "./styles";
-import { firestore } from "../../fbase";
 
 const ProfilePage = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.users);
-
-  useEffect(() => {
-    dispatch(getRealtimeUsers());
-    console.log(users);
-  }, []);
 
   return (
     <Layout title="프로필">
@@ -43,9 +36,6 @@ const ProfilePage = () => {
           </button>
         </Buttons>{" "}
       </Container>
-      {users.map((v) => (
-        <div key={v.uid}>{v.email}</div>
-      ))}
     </Layout>
   );
 };
