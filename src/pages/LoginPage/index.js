@@ -23,12 +23,6 @@ const LoginPage = ({ history }) => {
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   if (!auth.authenticated) {
-  //     dispatch(isLoggedInUser());
-  //   }
-  // }, []);
-
   const userLogin = (e) => {
     e.preventDefault();
 
@@ -57,7 +51,7 @@ const LoginPage = ({ history }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          로그인
         </Typography>
         <form className={classes.form} noValidate onSubmit={userLogin}>
           <TextField
@@ -66,7 +60,7 @@ const LoginPage = ({ history }) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="이메일"
             name="email"
             autoComplete="email"
             autoFocus
@@ -79,22 +73,18 @@ const LoginPage = ({ history }) => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="비밀번호"
             type="password"
             id="password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color={email && password.length >= 6 ? "primary" : "inherit"}
             className={classes.submit}
           >
             로그인
@@ -148,6 +138,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  palette: {
+    primary: "red",
   },
 }));
 

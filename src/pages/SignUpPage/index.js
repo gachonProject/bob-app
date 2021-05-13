@@ -16,10 +16,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { ErrorMsg } from "./styles";
 
 const RegisterPage = (props) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -30,8 +30,7 @@ const RegisterPage = (props) => {
     e.preventDefault();
 
     const user = {
-      firstName,
-      lastName,
+      name,
       email,
       password,
     };
@@ -39,8 +38,7 @@ const RegisterPage = (props) => {
     console.log(user);
 
     dispatch(signup(user));
-    setFirstName("");
-    setLastName("");
+    setName("");
     setEmail("");
     setPassword("");
   };
@@ -61,32 +59,20 @@ const RegisterPage = (props) => {
         </Typography>
         <form className={classes.form} noValidate onSubmit={registerUser}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="이름"
                 autoFocus
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
+              {name.length === 0 && <ErrorMsg>이름을 입력해주세요.</ErrorMsg>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -100,6 +86,7 @@ const RegisterPage = (props) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {!email.includes("@") && <ErrorMsg>정확한 이메일을 입력해주세요.</ErrorMsg>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -114,12 +101,7 @@ const RegisterPage = (props) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
+              {password.length < 6 && <ErrorMsg>비밀번호는 6자 이상이어야 합니다.</ErrorMsg>}
             </Grid>
           </Grid>
           <Button
@@ -129,12 +111,12 @@ const RegisterPage = (props) => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            회원가입
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <Link href="/login" variant="body2">
+                이미 회원이신가요? 로그인하러 가기
               </Link>
             </Grid>
           </Grid>
@@ -151,11 +133,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      <Link color="inherit" href="#">
+        밥친구해요
+      </Link>
+      {" 2021."}
     </Typography>
   );
 }
