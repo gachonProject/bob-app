@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   margin-top: 56px;
+  margin-bottom: 104px;
   padding: 1rem 0.875rem;
   max-width: 100%;
   overflow: hidden;
@@ -10,7 +11,8 @@ export const Container = styled.div`
 export const TopArea = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  margin-bottom: 1rem;
   div.detail-user-data {
     display: flex;
     align-items: center;
@@ -54,23 +56,18 @@ export const Title = styled.div`
   font-weight: 600;
   font-size: 1.25rem;
   margin: 0.5em 0;
+  padding: 0 0.25em;
 `;
 
 export const Content = styled.div`
   color: #212529;
+  padding: 0 0.25em;
 `;
 
 export const Buttons = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  font-size: 1rem;
   button {
-    margin-bottom: 0.5em;
-  }
-  .control {
-    display: flex;
-    button:first-child {
-      margin-right: 0.5em;
-    }
+    margin-right: 0.25em;
   }
 `;

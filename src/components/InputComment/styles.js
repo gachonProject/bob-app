@@ -2,11 +2,13 @@ import styled from "styled-components";
 
 export const InputBox = styled.div`
   position: fixed;
-  bottom: 72px;
+  bottom: 65px;
   left: 0;
   right: 0;
-  width: 90%;
+  width: 100%;
+  background:#fff;
   margin: 0 auto;
+  padding-bottom:0.5em;
   form{
     margin:0 auto;
     input {

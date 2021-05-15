@@ -16,8 +16,9 @@ export const Comment = styled.div`
     margin-right: 0.25em;
   }
 
-  & + last-child {
-    border: none;
+  .info-user {
+    font-size: 0.875rem;
+    font-weight: 600;
   }
 `;
 
