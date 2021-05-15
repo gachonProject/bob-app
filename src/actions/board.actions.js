@@ -17,7 +17,6 @@ export const addPost = (contents) => {
   return (dispatch) => {
     const currentUser = auth.currentUser;
     const db = firestore;
-    console.log(currentUser);
 
     db.collection("board")
       .add({

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Layout from "../../components/Layout";
 import gravatar from "gravatar";
-import { TopArea, Container, Title, Content, Buttons, InputBox } from "./styles";
+import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
-import { getPostData, resetData } from "../../actions/board.actions";
+import { getPostData } from "../../actions/board.actions";
 import { firestore } from "../../fbase";
 import Comments from "../../components/Comments";
 

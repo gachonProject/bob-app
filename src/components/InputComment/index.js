@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { addComment } from "../../actions/comment.action";
 import { InputBox } from "./styles";
 
-const InputComment = ({ history }) => {
+const InputComment = () => {
   const [comment, setComment] = useState("");
   const loadedCoords = localStorage.getItem("coords");
   const parsedCoords = JSON.parse(loadedCoords);
@@ -47,6 +47,7 @@ const InputComment = ({ history }) => {
     };
     dispatch(addComment(contents));
     setComment("");
+    document.body.scrollTop = document.body.scrollHeight;
   };
 
   return (

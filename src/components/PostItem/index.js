@@ -18,6 +18,8 @@ const PostItem = ({ post, onChangePage }) => {
     dispatch(getPostData(post.id));
   }, [dispatch]);
 
+  console.log(post.id);
+
   const getUserData = useCallback(async () => {
     const db = await firestore.collection("users").doc(post.owner);
     console.log(post);

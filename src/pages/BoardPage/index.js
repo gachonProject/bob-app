@@ -41,7 +41,7 @@ const BoardPage = ({ history }) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
         setIsLoading(true);
-        alert("Geolocation API 사용이 가능합니다.");
+        // alert("Geolocation API 사용이 가능합니다.");
       } else {
         alert("해당 브라우저에서 Geolocation API를 지원하지 않습니다.");
       }

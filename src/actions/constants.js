@@ -20,3 +20,8 @@ export const boardConstants = {
   GET_OWNER_DATA: "GET_OWNER_DATA",
   RESET_DATA: "RESET_DATA",
 };
+
+export const commentConstants = {
+  ADD_COMMENT: "ADD_COMMENT",
+  GET_COMMENTS: "GET_COMMENTS",
+};
