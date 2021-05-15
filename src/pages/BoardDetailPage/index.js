@@ -6,6 +6,8 @@ import gravatar from "gravatar";
 import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
 import { getPostData, resetData } from "../../actions/board.actions";
+import { Link } from "react-router-dom";
+import { firestore } from "../../fbase";
 
 const BoardDetailPage = ({ history }) => {
   const { boardId } = useParams();
@@ -25,11 +27,11 @@ const BoardDetailPage = ({ history }) => {
     return [dispatch(resetData()), setIsLoading(false)];
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const db = firestore;
-  //   var newCityRef = db.collection("board").doc();
-  //   console.log(newCityRef);
-  // }, []);
+  const removePost = () => {
+    firestore.collection("board").doc(boardId).delete();
+    alert("삭제되었습니다.");
+    history.push("/board");
+  };
 
   return (
     <Layout title={"밥 친구 게시판"}>
@@ -66,7 +68,16 @@ const BoardDetailPage = ({ history }) => {
                   >
                     채팅하기
                   </button>
-                ) : null}
+                ) : (
+                  <div className="control">
+                    <button className="btn" onClick={removePost}>
+                      삭제하기
+                    </button>
+                    <button className="btn" onClick={removePost}>
+                      삭제하기
+                    </button>
+                  </div>
+                )}
               </Buttons>
             </TopArea>
             <Title>{post.title}</Title>

@@ -64,7 +64,13 @@ export const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  button:first-child {
+  button {
     margin-bottom: 0.5em;
+  }
+  .control {
+    display: flex;
+    button:first-child {
+      margin-right: 0.5em;
+    }
   }
 `;
