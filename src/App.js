@@ -11,10 +11,11 @@ import ChatPage from "./pages/ChatPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import DeleteUserPage from "./pages/DeleteUserPage";
 import PrivateRoute from "./components/PrivateRoute";
+import BoardWritePage from "./pages/BoardWritePage";
+import BoardUpdatePage from "./pages/BoardUpdatePage";
 import { useEffect } from "react";
 import { isLoggedInUser } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
-import BoardWritePage from "./pages/BoardWritePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const App = () => {
           <PrivateRoute path="/changepassword" component={ChangePasswordPage} />
           <PrivateRoute path="/deleteuser" component={DeleteUserPage} />
           <PrivateRoute path="/write" component={BoardWritePage} />
+          <PrivateRoute path="/update/:boardId" component={BoardUpdatePage} />
         </Switch>
       </Router>
     </div>

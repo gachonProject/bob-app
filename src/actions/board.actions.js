@@ -103,7 +103,7 @@ export const getPostData = (boardId) => {
               console.log("게시자 조회에 실패했습니다.");
             });
         } else {
-          alert("존재하지 않는 게시물입니다");
+          // alert("존재하지 않는 게시물입니다");
           dispatch({
             type: `${boardConstants.GET_POST_DATA}_FAILURE`,
           });
@@ -116,6 +116,30 @@ export const getPostData = (boardId) => {
         });
       });
     return unsubscribe;
+  };
+};
+
+export const updatePost = (contents, boardId) => {
+  return async (dispatch) => {
+    const db = await firestore;
+
+    db.collection("board")
+      .doc(boardId)
+      .update({
+        ...contents,
+        date: getToday(),
+      })
+      .then((data) => {
+        dispatch({
+          type: `${boardConstants.UPDATE_POST}_SUCCESS`,
+        });
+        console.log("게시글 등록", data);
+      })
+      .catch(() => {
+        dispatch({
+          type: `${boardConstants.UPDATE_POST}_FAILURE`,
+        });
+      });
   };
 };
 

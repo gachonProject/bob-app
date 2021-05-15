@@ -21,10 +21,12 @@ const BoardDetailPage = ({ history }) => {
     console.log(owner);
   }
   useEffect(() => {
-    dispatch(getPostData(boardId));
-    setIsLoading(false);
-    // console.log(post.createdAt);
-    return [dispatch(resetData()), setIsLoading(false)];
+    let isSubscribed = true;
+    if (isSubscribed) {
+      dispatch(getPostData(boardId));
+      setIsLoading(false);
+    }
+    return () => (isSubscribed = false);
   }, [dispatch]);
 
   const removePost = () => {
@@ -73,8 +75,8 @@ const BoardDetailPage = ({ history }) => {
                     <button className="btn" onClick={removePost}>
                       삭제하기
                     </button>
-                    <button className="btn" onClick={removePost}>
-                      삭제하기
+                    <button className="btn" onClick={() => history.push(`/update/${boardId}`)}>
+                      수정하기
                     </button>
                   </div>
                 )}

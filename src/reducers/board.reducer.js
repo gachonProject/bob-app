@@ -73,7 +73,9 @@ export default (state = initState, action) => {
       };
     }
 
-    // case `${boardConstants.UPDATE_POST}_SUCCESS`
+    case `${boardConstants.UPDATE_POST}_SUCCESS`: {
+      return state;
+    }
   }
   return state;
 };
