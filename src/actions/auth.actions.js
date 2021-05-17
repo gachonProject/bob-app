@@ -179,17 +179,19 @@ export const deleteAccount = (uid) => {
       .doc(uid)
       .delete()
       .then(() => {
-        const user = auth.currentUser;
-        user
-          .delete()
-          .then(() => {
-            dispatch({ type: `${authConstants.DELETE_USER}_SUCCESS` });
-            alert("회원 탈퇴 성공");
-            localStorage.clear();
-          })
-          .catch((error) => {
-            alert("회원 탈퇴 실패");
-          });
+        // alert("회원 탈퇴 성공");
+        auth.signOut().then(() => {
+          localStorage.clear();
+          dispatch({ type: `${authConstants.USER_LOGOUT}_SUCCESS` });
+          alert("회원 탈퇴 성공");
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("회원탈퇴 실패");
       });
+
+    const currentUser = auth.currentUser;
+    currentUser.delete();
   };
 };
