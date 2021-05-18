@@ -36,8 +36,10 @@ const BoardPage = ({ history }) => {
     alert("Error occurred. Error code: " + error.code);
   };
 
+  console.log(localStorage.getItem("coords"));
+
   useEffect(() => {
-    if (storageLength === 1) {
+    if (localStorage.getItem("coords") === null) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
         setIsLoading(true);
