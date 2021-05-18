@@ -26,6 +26,7 @@ export const signup = (user) => {
                 uid: data.user.uid,
                 createdAt: new Date(),
                 isOnline: true,
+                reportCount: 0,
               })
               .then(() => {
                 const loggedInUser = {
