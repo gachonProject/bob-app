@@ -36,7 +36,7 @@ const BoardPage = ({ history }) => {
     alert("Error occurred. Error code: " + error.code);
   };
 
-  console.log(localStorage.getItem("coords"));
+  // console.log(localStorage.getItem("coords"));
 
   useEffect(() => {
     if (localStorage.getItem("coords") === null) {

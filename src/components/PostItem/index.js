@@ -18,18 +18,18 @@ const PostItem = ({ post, onChangePage }) => {
     dispatch(getPostData(post.id));
   }, [dispatch]);
 
-  console.log(post.id);
+  // console.log(post.id);
 
   const getUserData = useCallback(async () => {
     const db = await firestore.collection("users").doc(post.owner);
-    console.log(post);
+    // console.log(post);
     await db
       .get()
       .then((doc) => {
         if (doc.exists) {
           setUserData(doc.data());
         } else {
-          alert("존재하지 않는 게시자입니다..");
+          // alert("존재하지 않는 게시자입니다..");
         }
       })
       .catch((error) => {

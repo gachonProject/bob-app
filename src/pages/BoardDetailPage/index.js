@@ -29,7 +29,6 @@ const BoardDetailPage = ({ history }) => {
 
   useEffect(() => {
     // dispatch(resetData());
-    console.log("나 있다", post, isLoading);
     if (Object.keys(post).length !== 0) setIsLoading(false);
     else setIsLoading(true);
     console.log(isLoading);
