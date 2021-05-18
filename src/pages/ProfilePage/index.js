@@ -15,14 +15,11 @@ const ProfilePage = () => {
       <Container>
         <UserInfo>
           <div className="user-image">
-            <img
-              src={gravatar.url(auth.email, { s: "72px", d: "retro" })}
-              alt={auth.firstName + auth.lastName}
-            />
+            <img src={gravatar.url(auth.email, { s: "72px", d: "retro" })} alt={auth.name} />
           </div>
           <div className="user-data">
             <b className="email">이메일: {auth.email}</b>
-            <span>이름: {auth.firstName + auth.lastName}</span>
+            <span>이름: {auth.name}</span>
           </div>
         </UserInfo>
         <Account>

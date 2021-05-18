@@ -47,7 +47,7 @@ const InputComment = () => {
     };
     dispatch(addComment(contents));
     setComment("");
-    document.body.scrollTop = document.body.scrollHeight;
+    window.scrollBy(0, 10);
   };
 
   return (

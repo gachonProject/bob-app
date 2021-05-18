@@ -94,7 +94,7 @@ export const getPostData = (boardId) => {
                 // console.log(doc.data());
               } else {
                 console.log(doc);
-                console.log("존재하지 않는 게시자입니다..");
+                // console.log("존재하지 않는 게시자입니다..");
               }
             })
             .catch((error) => {

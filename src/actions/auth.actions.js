@@ -11,7 +11,7 @@ export const signup = (user) => {
       .then((data) => {
         console.log("data: ", data);
         const currentUser = auth.currentUser;
-        const name = `${user.firstName} ${user.lastName}`;
+        const name = user.name;
         currentUser
           .updateProfile({
             displayName: name,
@@ -21,8 +21,7 @@ export const signup = (user) => {
             db.collection("users")
               .doc(data.user.uid)
               .set({
-                firstName: user.firstName,
-                lastName: user.lastName,
+                name,
                 email: user.email,
                 uid: data.user.uid,
                 createdAt: new Date(),
@@ -30,8 +29,7 @@ export const signup = (user) => {
               })
               .then(() => {
                 const loggedInUser = {
-                  firstName: user.firstName,
-                  lastName: user.lastName,
+                  name,
                   uid: data.user.uid,
                   email: user.email,
                 };
@@ -72,12 +70,9 @@ export const signIn = (user) => {
             isOnline: true,
           })
           .then(() => {
-            const name = data.user.displayName.split(" ");
-            const firstName = name[0];
-            const lastName = name[1];
+            const name = data.user.displayName;
             const loggedInUser = {
-              firstName,
-              lastName,
+              name,
               uid: data.user.uid,
               email: data.user.email,
             };
@@ -180,21 +175,24 @@ export const deleteAccount = (uid) => {
   return async (dispatch) => {
     dispatch({ type: `${authConstants.DELETE_USER}_REQUEST` });
     const db = firestore;
+
+    const currentUser = auth.currentUser;
+    currentUser.delete();
+
     db.collection("users")
       .doc(uid)
       .delete()
       .then(() => {
-        const user = auth.currentUser;
-        user
-          .delete()
-          .then(() => {
-            dispatch({ type: `${authConstants.DELETE_USER}_SUCCESS` });
-            alert("회원 탈퇴 성공");
-            localStorage.clear();
-          })
-          .catch((error) => {
-            alert("회원 탈퇴 실패");
-          });
+        // alert("회원 탈퇴 성공");
+        auth.signOut().then(() => {
+          localStorage.clear();
+          dispatch({ type: `${authConstants.USER_LOGOUT}_SUCCESS` });
+          alert("회원 탈퇴 성공");
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("회원탈퇴 실패");
       });
   };
 };

@@ -4,6 +4,7 @@ import PostItem from "../../components/PostItem";
 import { Buttons, Container } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostList } from "../../actions/board.actions";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +14,6 @@ const BoardPage = ({ history }) => {
 
   useEffect(() => {
     dispatch(getPostList());
-    console.log(board);
   }, [dispatch]);
 
   const saveCoords = (coordsObj) => {
@@ -36,8 +36,10 @@ const BoardPage = ({ history }) => {
     alert("Error occurred. Error code: " + error.code);
   };
 
+  // console.log(localStorage.getItem("coords"));
+
   useEffect(() => {
-    if (storageLength === 1) {
+    if (localStorage.getItem("coords") === null) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
         setIsLoading(true);
@@ -56,9 +58,11 @@ const BoardPage = ({ history }) => {
   return (
     <Layout title={"밥 친구 게시판"}>
       <Container>
-        {board.map((post) => (
-          <PostItem key={post.id} post={post} onChangePage={onChangePage} />
-        ))}
+        <PullToRefresh onRefresh={dispatch(getPostList)}>
+          {board.map((post) => (
+            <PostItem key={post.id} post={post} onChangePage={onChangePage} />
+          ))}
+        </PullToRefresh>
         <Buttons>
           {isLoading ? (
             <div className="fix">위치 정보 계산중</div>
