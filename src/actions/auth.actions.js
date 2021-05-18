@@ -175,6 +175,10 @@ export const deleteAccount = (uid) => {
   return async (dispatch) => {
     dispatch({ type: `${authConstants.DELETE_USER}_REQUEST` });
     const db = firestore;
+
+    const currentUser = auth.currentUser;
+    currentUser.delete();
+
     db.collection("users")
       .doc(uid)
       .delete()
@@ -190,8 +194,5 @@ export const deleteAccount = (uid) => {
         console.log(error);
         alert("회원탈퇴 실패");
       });
-
-    const currentUser = auth.currentUser;
-    currentUser.delete();
   };
 };
