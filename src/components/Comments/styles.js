@@ -16,10 +16,16 @@ export const Comment = styled.div`
     margin-right: 0.25em;
   }
 
-  .info-user {
-    font-size: 0.875rem;
-    font-weight: 600;
+  .comment-info {
+    display: flex;
+    justify-content: space-between;
+    .info-user {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
   }
 `;
 
-export const Buttons = styled.div``;
+export const Buttons = styled.div`
+  margin-right: 0.5rem;
+`;
