@@ -97,6 +97,16 @@ const LoginPage = ({ history }) => {
           >
             회원가입
           </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => history.push("/resetpw")}
+          >
+            비밀번호 찾기
+          </Button>
         </form>
       </div>
       <Box mt={8}>
