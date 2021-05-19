@@ -6,7 +6,7 @@ import gravatar from "gravatar";
 import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
 import { getPostData } from "../../actions/board.actions";
-import { firestore } from "../../fbase";
+import { firestore, firebaseInstance } from "../../fbase";
 import Comments from "../../components/Comments";
 
 const BoardDetailPage = ({ history }) => {
@@ -44,6 +44,53 @@ const BoardDetailPage = ({ history }) => {
     history.push("/board");
   };
 
+  const removePostDB = (boardId) => {
+    const db = firestore.collection("board").doc(boardId);
+    db.delete();
+    alert("신고로 인해 게시글이 삭제되었습니다.");
+  };
+
+  const removeUserDB = (userId) => {
+    const db = firestore.collection("users").doc(userId);
+    db.delete();
+  };
+
+  const report = () => {
+    if (post.reportUsers.includes(currentUser.uid) === true) {
+      return alert("이미 신고한 게시글입니다.");
+    } else {
+      return reportUser();
+    }
+  };
+
+  const reportUser = () => {
+    const db = firestore.collection("board").doc(boardId);
+    db.update({
+      reportUsers: firebaseInstance.firestore.FieldValue.arrayUnion(currentUser.uid),
+    });
+
+    const userDB = firestore.collection("users").doc(post.owner);
+    const boardDB = firestore.collection("board").doc(boardId);
+
+    userDB.update({
+      reportCount: firebaseInstance.firestore.FieldValue.increment(1),
+    });
+
+    boardDB.update({
+      reportCount: firebaseInstance.firestore.FieldValue.increment(1),
+    });
+
+    history.push("/board");
+    alert("신고가 완료되었습니다.");
+
+    if (post.reportCount > 4) {
+      removePostDB(boardId);
+    }
+    if (owner.reportCount > 19) {
+      removeUserDB(owner.uid);
+    }
+  };
+
   return (
     <Layout title={"밥 친구 게시판"}>
       <Container>
@@ -54,10 +101,7 @@ const BoardDetailPage = ({ history }) => {
                 {!isLoading && (
                   <div className="user-image">
                     {owner.email && (
-                      <img
-                        src={gravatar.url(owner.email, { s: "40px", d: "retro" })}
-                        alt="프로필 사진"
-                      />
+                      <img src={gravatar.url("", { s: "40px", d: "retro" })} alt="프로필 사진" />
                     )}
                   </div>
                 )}
@@ -79,7 +123,7 @@ const BoardDetailPage = ({ history }) => {
                     >
                       채팅
                     </button>
-                    <button onClick={() => alert("신고완료")} className="btn btn-report">
+                    <button onClick={report} className="btn btn-report">
                       신고
                     </button>
                   </>

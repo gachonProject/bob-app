@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ChatContainer = styled.div`
-  height: 50px;
   padding: 1rem;
   border-bottom: 1px solid #ccc;
 `;

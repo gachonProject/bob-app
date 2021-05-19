@@ -24,6 +24,8 @@ export const addPost = (contents) => {
         owner: currentUser.uid,
         ownerEmail: currentUser.email,
         createdAt: getToday(),
+        reportCount: 0,
+        reportUsers: [],
       })
       .then((data) => {
         dispatch({

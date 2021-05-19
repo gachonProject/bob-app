@@ -31,7 +31,13 @@ const ProfilePage = () => {
           <button className="btn btn-logout" onClick={() => dispatch(logout(auth.uid))}>
             <h3>로그아웃</h3>
           </button>
-        </Buttons>{" "}
+        </Buttons>
+        {auth.email === "admin@gmail.com" ? (
+          <Account>
+            <h3>관리자 기능</h3>
+            <Link to="/admin">회원관리</Link>
+          </Account>
+        ) : null}
       </Container>
     </Layout>
   );

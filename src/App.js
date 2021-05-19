@@ -13,6 +13,9 @@ import DeleteUserPage from "./pages/DeleteUserPage";
 import PrivateRoute from "./components/PrivateRoute";
 import BoardWritePage from "./pages/BoardWritePage";
 import BoardUpdatePage from "./pages/BoardUpdatePage";
+import AdminPage from "./pages/AdminPage";
+import AdminUserDetailPage from "./pages/AdminUserDetailPage";
+import ResetPWPage from "./pages/ResetPWPage";
 import { useEffect } from "react";
 import { isLoggedInUser } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,9 +34,10 @@ const App = () => {
     <div className="App">
       <Router>
         <Switch>
-          <PrivateRoute exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/" component={BoardPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignUpPage} />
+          <Route path="/resetpw" component={ResetPWPage} />
           <PrivateRoute exact path="/board" component={BoardPage} />
           <PrivateRoute path="/board/:boardId" component={BoardDetailPage} />
           <PrivateRoute exact path="/chatlist" component={ChatListPage} />
@@ -43,6 +47,8 @@ const App = () => {
           <PrivateRoute path="/deleteuser" component={DeleteUserPage} />
           <PrivateRoute path="/write" component={BoardWritePage} />
           <PrivateRoute path="/update/:boardId" component={BoardUpdatePage} />
+          <PrivateRoute path="/admin" component={AdminPage} />
+          <PrivateRoute path="/adminuserdetail/:uid" component={AdminUserDetailPage} />
         </Switch>
       </Router>
     </div>
