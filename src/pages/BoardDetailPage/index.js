@@ -101,10 +101,7 @@ const BoardDetailPage = ({ history }) => {
                 {!isLoading && (
                   <div className="user-image">
                     {owner.email && (
-                      <img
-                        src={gravatar.url(owner.email, { s: "40px", d: "retro" })}
-                        alt="프로필 사진"
-                      />
+                      <img src={gravatar.url("", { s: "40px", d: "retro" })} alt="프로필 사진" />
                     )}
                   </div>
                 )}

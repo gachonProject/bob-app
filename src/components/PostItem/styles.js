@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 80px;
   padding: 0.875em 1em;
   border-bottom: 1px solid #ccc;
   p.postlist-content {

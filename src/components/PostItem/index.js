@@ -51,7 +51,7 @@ const PostItem = ({ post, onChangePage }) => {
           {userData && (
             <img
               style={{ marginRight: "4px" }}
-              src={gravatar.url(userData.email, { s: "24", d: "retro" })}
+              src={gravatar.url("", { s: "24", d: "retro" })}
               alt="프로필 사진"
             />
           )}

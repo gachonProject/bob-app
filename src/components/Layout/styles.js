@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin-top: 4em;
-  margin-bottom: 5em;
+  margin-top: 64px;
+  margin-bottom: 80px;
   a {
     margin-top: 8px;
     text-decoration: none;
