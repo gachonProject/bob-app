@@ -5,12 +5,21 @@ import { Buttons, Container } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostList } from "../../actions/board.actions";
 import PullToRefresh from "react-simple-pull-to-refresh";
+import axios from "axios";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [storageLength, setStorageLength] = useState(localStorage.length);
   const dispatch = useDispatch();
   const board = useSelector((state) => state.board.posts);
+  const [search, setSearch] = useState("");
+  const [click, setClick] = useState(0);
+  const loadedCoords = localStorage?.getItem("coords");
+  const parsedCoords = JSON.parse(loadedCoords);
+  const lat = parsedCoords?.latitude;
+  const long = parsedCoords?.longitude;
+  const [cityName, setCityName] = useState("");
+  const [dongName, setDongName] = useState("");
+  const [fullName, setfullName] = useState("");
 
   useEffect(() => {
     dispatch(getPostList());
@@ -18,7 +27,6 @@ const BoardPage = ({ history }) => {
 
   const saveCoords = (coordsObj) => {
     localStorage.setItem("coords", JSON.stringify(coordsObj));
-    setStorageLength((prevLength) => prevLength + 1);
     setIsLoading(false);
   };
 
@@ -51,28 +59,73 @@ const BoardPage = ({ history }) => {
     return () => setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  const getLocation = async () => {
+    const key = process.env.REACT_APP_KAKAO_REST_API_KEY;
+    const url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${long}&y=${lat}&input_coord=WGS84`;
+    const res = await axios.get(url, {
+      headers: { Authorization: "KakaoAK " + key },
+    });
+    setCityName(res.data.documents[0].address.region_2depth_name);
+    setDongName(res.data.documents[0].address.region_3depth_name);
+    setfullName(setCityName + setDongName);
+  };
+
   const onChangePage = (post) => {
     history.push(`/board/${post.id}`);
   };
 
   return (
     <Layout title={"밥 친구 게시판"}>
-      <Container>
-        <PullToRefresh onRefresh={dispatch(getPostList)}>
-          {board.map((post) => (
-            <PostItem key={post.id} post={post} onChangePage={onChangePage} />
-          ))}
-        </PullToRefresh>
-        <Buttons>
-          {isLoading ? (
-            <div className="fix">위치 정보 계산중</div>
-          ) : (
-            <button className="fix btn-write" onClick={() => history.push("/write")}>
-              <h3>작성</h3>
+      {!isLoading ? (
+        <Container>
+          <input type="text" onChange={(e) => setSearch(e.target.value)} />
+          <Buttons>
+            <button
+              onChange={(e) => setClick(e.target.value)}
+              onClick={() => {
+                setClick(0);
+              }}
+            >
+              모든 게시글
             </button>
-          )}
-        </Buttons>
-      </Container>
+            <button
+              onChange={(e) => setClick(e.target.value)}
+              onClick={() => {
+                setClick(1);
+              }}
+            >
+              현재 위치 게시글
+            </button>
+          </Buttons>
+          <PullToRefresh onRefresh={dispatch(getPostList)}>
+            {board.map((post) => {
+              const title = post.title.toLowerCase().indexOf(search.toLowerCase()) >= 0;
+              const city = post.cityName.toLowerCase().indexOf(search.toLowerCase()) >= 0;
+              const dong = post.dongName.toLowerCase().indexOf(search.toLowerCase()) >= 0;
+              if (click === 0 && (title || city || dong)) {
+                return <PostItem key={post.id} post={post} onChangePage={onChangePage} />;
+              } else if (click === 1 && cityName === post.cityName && (title || city || dong)) {
+                return <PostItem key={post.id} post={post} onChangePage={onChangePage} />;
+              }
+            })}
+          </PullToRefresh>
+          <Buttons>
+            {isLoading ? (
+              <div className="fix">위치 정보 계산중</div>
+            ) : (
+              <button className="fix btn-write" onClick={() => history.push("/write")}>
+                <h3>작성</h3>
+              </button>
+            )}
+          </Buttons>
+        </Container>
+      ) : (
+        <p>로딩중</p>
+      )}
     </Layout>
   );
 };
