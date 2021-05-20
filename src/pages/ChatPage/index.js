@@ -73,7 +73,7 @@ const ChatPage = () => {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="메시지를 입력하세요"
             />
-            <button onClick={submitMessage}>send</button>
+            <button onClick={submitMessage}>전송</button>
           </ChatControls>
         </ChatArea>
       </Container>

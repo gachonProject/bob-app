@@ -21,6 +21,22 @@ export const Form = styled.form`
   width: 90%;
   margin: 0 auto;
   padding: 1em;
+
+  button {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+    outline: none;
+    border: 2px solid #c62828;
+    border-radius: 4px;
+    color: #c62828;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 16px;
+    background: white;
+  }
 `;
 
 export const InputTitle = styled.input`
@@ -34,5 +50,6 @@ export const InputContent = styled(TextareaAutosize)`
   margin-top: 1em;
   padding: 0.5em;
   border: none;
+  border-bottom: 1px solid #ccc;
   resize: none;
 `;
