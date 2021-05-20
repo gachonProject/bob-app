@@ -52,6 +52,7 @@ export const signup = (user) => {
       })
       .catch((error) => {
         console.log(user);
+        alert("이미 존재하는 이메일입니다!");
       });
   };
 };

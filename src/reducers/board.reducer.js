@@ -66,11 +66,7 @@ export default (state = initState, action) => {
     }
 
     case `${boardConstants.RESET_DATA}_SUCCESS`: {
-      state = {
-        postData: {},
-        posts: [],
-        ownerData: {},
-      };
+      return { ...initState };
     }
 
     case `${boardConstants.UPDATE_POST}_SUCCESS`: {

@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import gravatar from "gravatar";
 import { TopArea, Container, Title, Content, Buttons } from "./styles";
 import dayjs from "dayjs";
-import { getPostData } from "../../actions/board.actions";
+import { getPostData, resetData } from "../../actions/board.actions";
 import { firestore, firebaseInstance } from "../../fbase";
 import Comments from "../../components/Comments";
 
@@ -25,17 +25,18 @@ const BoardDetailPage = ({ history }) => {
     return () => {
       isSubscribed = false;
     };
-  }, [isLoading]);
+  }, [isLoading, dispatch]);
 
   useEffect(() => {
-    // dispatch(resetData());
+    dispatch(resetData());
+    // dispatch(getPostData(boardId));
     if (Object.keys(post).length !== 0) setIsLoading(false);
     else setIsLoading(true);
-    console.log(isLoading);
+    console.log(post, isLoading);
+    return () => dispatch(resetData());
+  }, [dispatch]);
 
-    // return () => dispatch(resetData());
-  }, [post, isLoading]);
-
+  useEffect(() => {}, []);
   // console.log(isLoading);
 
   const removePost = () => {
