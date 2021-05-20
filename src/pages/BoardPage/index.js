@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import PostItem from "../../components/PostItem";
-import { Buttons, Container } from "./styles";
+import { Buttons, Container, SearchBar } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostList } from "../../actions/board.actions";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const BoardPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,13 +84,21 @@ const BoardPage = ({ history }) => {
     <Layout title={"밥 친구 게시판"}>
       {!isLoading ? (
         <Container>
-          <input type="text" onChange={(e) => setSearch(e.target.value)} />
+          <SearchBar>
+            <FontAwesomeIcon icon={faSearch} />
+            <input
+              type="text"
+              placeholder="제목 또는 지역을 입력해주세요"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </SearchBar>
           <Buttons>
             <button
               onChange={(e) => setClick(e.target.value)}
               onClick={() => {
                 setClick(0);
               }}
+              className="btn-filter btn-view-all"
             >
               모든 게시글
             </button>
@@ -97,6 +107,7 @@ const BoardPage = ({ history }) => {
               onClick={() => {
                 setClick(1);
               }}
+              className="btn-filter btn-view-current"
             >
               현재 위치 게시글
             </button>
@@ -118,6 +129,7 @@ const BoardPage = ({ history }) => {
               <div className="fix">위치 정보 계산중</div>
             ) : (
               <button className="fix btn-write" onClick={() => history.push("/write")}>
+                <FontAwesomeIcon icon={faPencilAlt} />
                 <h3>작성</h3>
               </button>
             )}

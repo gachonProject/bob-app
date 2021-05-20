@@ -27,19 +27,28 @@ export const ChatArea = styled.div`
   .date {
     margin-bottom: 5px;
     font-size: 0.75rem;
-  }
 `;
 
 export const ChatControls = styled.div`
   display: flex;
   position: fixed;
+  align-items: center;
   width: 100%;
-  height: 50px;
   bottom: 64px;
+  border-top: 1px solid gray;
+  padding-top: 8px;
+  padding-bottom: 8px;
   textarea {
     width: 90%;
+    resize: none;
+    border: none;
   }
   button {
+    color: #c62828;
+    box-sizing: border-box;
     width: 10%;
+    height: 100%;
+    background: #f8f9fa;
+    border: none;
   }
 `;

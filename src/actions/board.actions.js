@@ -145,7 +145,7 @@ export const updatePost = (contents, boardId) => {
 };
 
 export const resetData = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: `${boardConstants.RESET_DATA}_SUCCESS`,
     });
