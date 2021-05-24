@@ -8,6 +8,8 @@ import gravatar from "gravatar";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { getPostData } from "../../actions/board.actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 
 const PostItem = ({ post, onChangePage }) => {
   const [userData, setUserData] = useState({});
@@ -16,7 +18,7 @@ const PostItem = ({ post, onChangePage }) => {
 
   useEffect(() => {
     dispatch(getPostData(post.id));
-  }, [dispatch]);
+  }, []);
 
   // console.log(post.id);
 
@@ -62,7 +64,10 @@ const PostItem = ({ post, onChangePage }) => {
           <span className="date"> {dayjs(post.createdAt).format("MM/DD h:mm A")}</span>
         </div>
         <div className="postlist-sub-data">
-          <span className="comments">0</span>
+          <FontAwesomeIcon icon={faComment} />
+          <span className="comments" style={{ marginLeft: "8px" }}>
+            {post.commentLength}
+          </span>
         </div>
       </div>
     </Container>

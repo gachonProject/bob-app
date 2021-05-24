@@ -26,6 +26,7 @@ export const addPost = (contents) => {
         createdAt: getToday(),
         reportCount: 0,
         reportUsers: [],
+        commentLength: 0,
       })
       .then((data) => {
         dispatch({
