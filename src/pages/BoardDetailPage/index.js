@@ -32,7 +32,7 @@ const BoardDetailPage = ({ history }) => {
     // dispatch(getPostData(boardId));
     if (Object.keys(post).length !== 0) setIsLoading(false);
     else setIsLoading(true);
-    console.log(post, isLoading);
+    // console.log(post, isLoading);
     return () => dispatch(resetData());
   }, [dispatch]);
 

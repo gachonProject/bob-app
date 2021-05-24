@@ -16,7 +16,7 @@ const Comments = () => {
     dispatch(getCommentList(boardId));
   }, []);
 
-  console.log(comments);
+  // console.log(comments);
 
   const removeComment = (id) => {
     const db = firestore.collection("board").doc(boardId);
@@ -27,7 +27,7 @@ const Comments = () => {
     alert("댓글이 삭제되었습니다.");
   };
 
-  console.log(comments);
+  // console.log(comments);
   return (
     <Container>
       {comments.map((comment) => (

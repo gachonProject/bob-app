@@ -10,10 +10,10 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case `${authConstants.USER_LOGIN}_REQUEST`:
-      console.log(action);
+      // console.log(action);
       state = {
         ...state,
         authenticating: true,
@@ -21,7 +21,6 @@ export default (state = initState, action) => {
       break;
 
     case `${authConstants.USER_LOGIN}_SUCCESS`:
-      console.log(action);
       state = {
         ...state,
         ...action.payload.user,
@@ -31,7 +30,6 @@ export default (state = initState, action) => {
       break;
 
     case `${authConstants.USER_LOGIN}_FAILURE`:
-      console.log(action);
       state = {
         ...state,
         authenticated: false,

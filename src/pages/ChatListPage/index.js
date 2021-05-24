@@ -10,7 +10,7 @@ const ChatListPage = () => {
   const currentUser = useSelector((state) => state.auth);
   const [conversationList, setConversationList] = useState([]);
 
-  console.log(currentUser);
+  // console.log(currentUser);
   const getConversationList = async () => {
     const db = await firestore;
     if (currentUser.uid) {
@@ -38,13 +38,13 @@ const ChatListPage = () => {
                 });
 
                 conversations.push([doc.data().user_uid_1, doc.data().user_uid_2].sort().join(""));
-                console.log(doc.data());
+                // console.log(doc.data());
               }
             }
           });
           setConversationList(conversations);
-          console.log(conversationList);
-          console.log(conversations);
+          // console.log(conversationList);
+          // console.log(conversations);
         });
     }
   };
