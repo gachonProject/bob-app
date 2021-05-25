@@ -10,7 +10,7 @@ const ChatListPage = () => {
   const currentUser = useSelector((state) => state.auth);
   const [conversationList, setConversationList] = useState([]);
 
-  console.log(currentUser);
+  // console.log(currentUser);
   const getConversationList = async () => {
     const db = await firestore;
     if (currentUser.uid) {
@@ -38,13 +38,13 @@ const ChatListPage = () => {
                 });
 
                 conversations.push([doc.data().user_uid_1, doc.data().user_uid_2].sort().join(""));
-                console.log(doc.data());
+                // console.log(doc.data());
               }
             }
           });
           setConversationList(conversations);
-          console.log(conversationList);
-          console.log(conversations);
+          // console.log(conversationList);
+          // console.log(conversations);
         });
     }
   };
@@ -55,7 +55,7 @@ const ChatListPage = () => {
 
   return (
     <Layout title={"채팅목록"}>
-      {conversationList.map((room) =>
+      {conversationList.map((room, i) =>
         // 현재 반복문을 돌고 있는 room이 객체일 시
         room.members ? (
           /**
@@ -68,11 +68,12 @@ const ChatListPage = () => {
                 ? `chatlist/${currentUser.uid}/${room.members[1]}`
                 : `chatlist/${currentUser.uid}/${room.members[0]}`
             }
+            key={room.user_uid_1 + room.user_uid_2}
           >
             <ChatContainer>
               <ChatData>
                 <div className="user">익명</div>
-                <div className="date">{dayjs(room.createdAt).format("MM/DD hh:mm")}</div>
+                <div className="date">{dayjs(room.createdAt).format("MM/DD h:mm A")}</div>
               </ChatData>
               <ChatPreview>{room.message}</ChatPreview>
               <div></div>

@@ -26,6 +26,7 @@ export const addPost = (contents) => {
         createdAt: getToday(),
         reportCount: 0,
         reportUsers: [],
+        commentLength: 0,
       })
       .then((data) => {
         dispatch({
@@ -57,7 +58,7 @@ export const getPostList = () => {
           };
           posts.push(postObj);
         });
-        console.log(posts);
+        // console.log(posts);
         dispatch({
           type: `${boardConstants.GET_POSTS}_SUCCESS`,
           payload: { posts },
@@ -95,7 +96,7 @@ export const getPostData = (boardId) => {
                 });
                 // console.log(doc.data());
               } else {
-                console.log(doc);
+                // console.log(doc);
                 // console.log("존재하지 않는 게시자입니다..");
               }
             })

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { addComment } from "../../actions/comment.action";
+import { firebaseInstance, firestore } from "../../fbase";
 import { InputBox } from "./styles";
 
 const InputComment = () => {
@@ -37,6 +38,8 @@ const InputComment = () => {
 
   const handleSubmitComments = (e) => {
     e.preventDefault();
+    const db = firestore.collection("board").doc(boardId);
+
     const contents = {
       comment,
       lat,
@@ -46,6 +49,9 @@ const InputComment = () => {
       boardId,
     };
     dispatch(addComment(contents));
+    db.update({
+      commentLength: firebaseInstance.firestore.FieldValue.increment(1),
+    });
     setComment("");
     window.scrollBy(0, 10);
   };

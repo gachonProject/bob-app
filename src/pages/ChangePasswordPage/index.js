@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-const ChangePasswordPage = () => {
+const ChangePasswordPage = ({ history }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
@@ -28,11 +28,11 @@ const ChangePasswordPage = () => {
       setCurrentPassword("");
       setNewPassword("");
       setNewPasswordCheck("");
+      history.push("/profile");
+      // alert("비밀번호 변경이 완료되었습니다.");
     } else if (newPassword !== newPasswordCheck) {
       alert("새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.");
     }
-
-    return <Redirect to="/profile" />;
   };
 
   return (

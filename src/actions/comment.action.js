@@ -1,5 +1,5 @@
 import { commentConstants } from "./constants";
-import { auth, firestore } from "../fbase";
+import { auth, firebaseInstance, firestore } from "../fbase";
 
 const getToday = () => {
   const date = new Date();
@@ -14,7 +14,7 @@ const getToday = () => {
 };
 
 export const addComment = (contents) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const currentUser = auth.currentUser;
     const db = firestore;
 
@@ -56,7 +56,7 @@ export const getCommentList = (boardId) => {
           };
           comments.push(commentObj);
         });
-        console.log(comments);
+        // console.log(comments);
         dispatch({
           type: `${commentConstants.GET_COMMENTS}_SUCCESS`,
           payload: { comments },

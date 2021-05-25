@@ -5,7 +5,7 @@ import InputComment from "../InputComment";
 import { Comment, Container, Buttons } from "./styles";
 import dayjs from "dayjs";
 import { useParams } from "react-router";
-import { firestore } from "../../fbase";
+import { firebaseInstance, firestore } from "../../fbase";
 
 const Comments = () => {
   const { boardId } = useParams();
@@ -16,12 +16,18 @@ const Comments = () => {
     dispatch(getCommentList(boardId));
   }, []);
 
+  // console.log(comments);
+
   const removeComment = (id) => {
+    const db = firestore.collection("board").doc(boardId);
+    db.update({
+      commentLength: firebaseInstance.firestore.FieldValue.increment(-1),
+    });
     firestore.collection("comments").doc(id).delete();
     alert("댓글이 삭제되었습니다.");
   };
 
-  console.log(comments);
+  // console.log(comments);
   return (
     <Container>
       {comments.map((comment) => (
