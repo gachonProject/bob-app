@@ -1,4 +1,4 @@
-var CACHE_NAME = "pwa-task-manager";
+var CACHE_NAME = "pwa-bob-app";
 var urlsToCache = ["/", "/completed"];
 
 // Install a service worker
@@ -27,7 +27,7 @@ this.addEventListener("fetch", (event) => {
 
 // Update a service worker
 this.addEventListener("activate", (event) => {
-  var cacheWhitelist = ["pwa-task-manager"];
+  var cacheWhitelist = ["pwa-bob-app"];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(

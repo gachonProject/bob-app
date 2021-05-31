@@ -124,6 +124,53 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
+// // 해시 처리
+// const urlB64ToUint8Array = (base64String) => {
+//   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+//   const base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
+
+//   const rawData = window.atob(base64);
+//   const outputArray = new Uint8Array(rawData.length);
+
+//   for (let i = 0; i < rawData.length; ++i) {
+//     outputArray[i] = rawData.charCodeAt(i);
+//   }
+//   return outputArray;
+// };
+
+// // 구독하기
+// export const subscribeUser = (swRegistration) => {
+//   const applicationServerKey = urlB64ToUint8Array(
+//     // process.env.REACT_APP_PUSH_APPLICATION_SERVER_KEY
+//     "AAAA3r7ybGE:APA91bGaiuF4HEMtFaEMySHlQdMF6JkD8m_f7itaLj2ozwkG8qABh7_qwyf0K3tYSgkPZNnPixCwS_kpY1K_hKSa1ggNWg1N78_a0Cv5v2mWvvTjSp9yIiqAt4N6tlwX9bLZVEXrhK0e"
+//   );
+//   const ACCESS_PUSH_TOKEN = "ACCESS_PUSH_TOKEN";
+
+//   swRegistration.pushManager
+//     .subscribe({
+//       userVisibleOnly: true,
+//       applicationServerKey, // 서버 키 등록
+//     })
+//     .then((subscription) => {
+//       const pwaSubscription = JSON.parse(JSON.stringify(subscription));
+//       localStorage.setItem(ACCESS_PUSH_TOKEN, pwaSubscription.keys.auth); // 추후 코드 제거를 위해 저장합니다.
+//       pushSubscription(pwaSubscription);
+//     })
+//     .catch((e) => console.log(`subscribe error`, e));
+// };
+
+// export const pushSubscription = (subscription) => {
+//   // 서버로 구독 정보 전송
+//   if ("serviceWorker" in navigator && "PushManager" in window) {
+//     window.addEventListener("load", () => {
+//       navigator.serviceWorker
+//         .register("/service-worker.js")
+//         .then((reg) => subscribeUser(reg))
+//         .catch((e) => console.log(e));
+//     });
+//   }
+// };
+
 export function unregister() {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready
