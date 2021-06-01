@@ -66,7 +66,7 @@ const PostItem = ({ post, onChangePage }) => {
         <div className="postlist-sub-data">
           <FontAwesomeIcon icon={faComment} />
           <span className="comments" style={{ marginLeft: "8px" }}>
-            {post.commentLength}
+            {post.commentLength ? post.commentLength : 0}
           </span>
         </div>
       </div>

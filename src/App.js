@@ -19,6 +19,7 @@ import ResetPWPage from "./pages/ResetPWPage";
 import { useEffect } from "react";
 import { isLoggedInUser } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
+import { messaging } from "./fbase";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,19 @@ const App = () => {
     if (!auth.authenticated) {
       dispatch(isLoggedInUser());
     }
+  }, []);
+
+  //사용자에게 허가를 받아 토큰을 가져옵니다.
+  useEffect(() => {
+    const msg = messaging;
+    msg
+      .requestPermission()
+      .then(() => {
+        return msg.getToken();
+      })
+      .then((data) => {
+        console.warn("token", data);
+      });
   }, []);
 
   return (
