@@ -29,12 +29,13 @@ const BoardDetailPage = ({ history }) => {
 
   useEffect(() => {
     dispatch(resetData());
+    dispatch(getPostData(boardId));
     // dispatch(getPostData(boardId));
-    if (Object.keys(post).length !== 0) setIsLoading(false);
+    if (post) setIsLoading(false);
     else setIsLoading(true);
     // console.log(post, isLoading);
     return () => dispatch(resetData());
-  }, [dispatch]);
+  }, [dispatch, resetData]);
 
   useEffect(() => {}, []);
   // console.log(isLoading);
@@ -91,6 +92,9 @@ const BoardDetailPage = ({ history }) => {
       removeUserDB(owner.uid);
     }
   };
+
+  console.log(isLoading);
+  console.log(post);
 
   return (
     <Layout title={"밥 친구 게시판"}>
