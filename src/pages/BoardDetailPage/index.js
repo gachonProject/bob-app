@@ -93,8 +93,8 @@ const BoardDetailPage = ({ history }) => {
     }
   };
 
-  console.log(isLoading);
-  console.log(post);
+  // console.log(isLoading);
+  // console.log(post);
 
   return (
     <Layout title={"밥 친구 게시판"}>
