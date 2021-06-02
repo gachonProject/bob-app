@@ -9,7 +9,7 @@ export const signup = (user) => {
     auth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((data) => {
-        console.log("data: ", data);
+        // console.log("data: ", data);
         const currentUser = auth.currentUser;
         const name = user.name;
         currentUser
@@ -35,7 +35,7 @@ export const signup = (user) => {
                   email: user.email,
                 };
                 localStorage.setItem("user", JSON.stringify(loggedInUser));
-                console.log("User logged in successfully");
+                // console.log("User logged in successfully");
                 dispatch({
                   type: `${authConstants.USER_LOGIN}_SUCCESS`,
                   payload: { user: loggedInUser },
@@ -43,7 +43,7 @@ export const signup = (user) => {
               });
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             dispatch({
               type: `${authConstants.USER_LOGIN}_FAILURE`,
               payload: { error },
@@ -51,7 +51,7 @@ export const signup = (user) => {
           });
       })
       .catch((error) => {
-        console.log(user);
+        // console.log(user);
         alert("이미 존재하는 이메일입니다!");
       });
   };
@@ -63,7 +63,7 @@ export const signIn = (user) => {
     auth
       .signInWithEmailAndPassword(user.email, user.password)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         const db = firestore;
         db.collection("users")
@@ -86,11 +86,11 @@ export const signIn = (user) => {
             });
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         dispatch({
           type: `${authConstants.USER_LOGIN}_FAILURE`,
           payload: { error },
@@ -136,12 +136,12 @@ export const logout = (uid) => {
             dispatch({ type: `${authConstants.USER_LOGOUT}_SUCCESS` });
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             dispatch({ type: `${authConstants.USER_LOGOUT}_FAILURE`, payload: { error } });
           });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 };
@@ -193,7 +193,7 @@ export const deleteAccount = (uid) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         alert("회원탈퇴 실패");
       });
   };

@@ -140,7 +140,9 @@ const DeleteUserPage = ({ history }) => {
             <p>함께 삭제됩니다.</p>
           </div>
           <Buttons>
-            <button className="btn btn-cancel">취소</button>
+            <button className="btn btn-cancel" onClick={() => history.push("/profile")}>
+              취소
+            </button>
             <button className="btn btn-logout" onClick={onDeleteUser}>
               회원 탈퇴
             </button>
