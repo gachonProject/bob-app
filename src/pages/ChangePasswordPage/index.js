@@ -90,6 +90,16 @@ const ChangePasswordPage = ({ history }) => {
           >
             비밀번호 변경
           </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="default"
+            className={classes.submit}
+            onClick={() => history.push("/profile")}
+          >
+            취소
+          </Button>
         </form>
       </div>
       <Box mt={8}>

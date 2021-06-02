@@ -13,13 +13,13 @@ const AdminPage = () => {
 
   return (
     <Layout title={"관리자 기능"}>
-      <div>
+      <div style={{ margin: "0 auto" }}>
         <h1 style={{ textAlign: "center" }}>관리자</h1>
-        <table style={{ width: "90%", textAlign: "center" }}>
+        <table style={{ margin: "0 auto", textAlign: "center" }}>
           <tr>
-            <th>이름</th>
-            <th>이메일</th>
-            <th>삭제</th>
+            <th style={{ width: "30%" }}>이름</th>
+            <th style={{ width: "30%" }}>이메일</th>
+            <th style={{ width: "30%" }}>삭제</th>
           </tr>
           {users.map((user) => (
             <AdminUser user={user} key={user.uid} />

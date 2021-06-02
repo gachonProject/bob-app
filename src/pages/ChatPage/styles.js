@@ -10,6 +10,14 @@ export const ChatArea = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    .messageStyle {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 10px;
+      margin: 5px;
+      display: inline-block;
+    }
   }
   .msg {
     display: flex;

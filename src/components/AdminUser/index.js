@@ -62,7 +62,9 @@ const AdminUser = ({ user: u }) => {
             <td>
               <Link to={`/adminuserdetail/${user.uid}`}>{user.name}</Link>
             </td>
-            <td>{user.email}</td>
+            <td>
+              <Link to={`/adminuserdetail/${user.uid}`}>{user.email}</Link>
+            </td>
             <td>
               <button onClick={del}>Delete</button>
             </td>
